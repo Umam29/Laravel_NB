@@ -8,23 +8,21 @@ use Illuminate\Support\Str;
 
 use App\Post;
 use App\Category;
-use App\User;
-use App\Admin;
-use App\Editor;
+use App\Consumer;
 use Auth;
 
 class PostController extends Controller
 {
     public function articleWriterIndex()
     {
-        $post = Post::where([['type','article'], ['status', '<>', 'publish']])->paginate(5);
+        $post = Post::where([['users_id',Auth::user()->id], ['type','article'], ['status', '<>', 'publish']])->paginate(5);
 
         return view('writer.post.index', compact('post'));
     }
 
     public function articlePublishIndex()
     {
-        $post = Post::where([['type','article'], ['status', '=', 'publish']])->paginate(5);
+        $post = Post::where([['users_id',Auth::user()->id], ['type','article'], ['status', '=', 'publish']])->paginate(5);
 
         return view('writer.post.publish', compact('post'));
     }
@@ -32,7 +30,7 @@ class PostController extends Controller
     public function articleWriterCreate()
     {
         $category = Category::all();
-        $editor = Editor::all();
+        $editor = Consumer::where('user_types_id',2)->get();
 
         return view('writer.post.create', compact('category', 'editor'));
     }
@@ -72,7 +70,7 @@ class PostController extends Controller
     {
         $post = Post::findorfail($id);
         $category = Category::all();
-        $editor = Editor::all();
+        $editor = Consumer::where('user_types_id',2)->get();
 
         return view('writer.post.edit', compact('post', 'category', 'editor'));
     }
@@ -128,14 +126,14 @@ class PostController extends Controller
 
     public function articleEditorIndex()
     {
-        $post = Post::where([['type','article'], ['status', '<>', 'publish']])->paginate(5);
+        $post = Post::where([['editors_id',Auth::user()->id], ['type','article'], ['status', '<>', 'publish']])->paginate(5);
 
         return view('editor.post.index', compact('post'));
     }
 
     public function articlePublishEditorIndex()
     {
-        $post = Post::where([['type','article'], ['status', '=', 'publish']])->paginate(5);
+        $post = Post::where([['editors_id',Auth::user()->id], ['type','article'], ['status', '=', 'publish']])->paginate(5);
 
         return view('editor.post.publish', compact('post'));
     }
@@ -144,7 +142,7 @@ class PostController extends Controller
     {
         $post = Post::findorfail($id);
         $category = Category::all();
-        $editor = Editor::all();
+        $editor = Consumer::where('user_types_id',2)->get();
 
         return view('editor.post.edit', compact('post', 'category', 'editor'));
     }

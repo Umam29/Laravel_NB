@@ -15,13 +15,23 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
-    public function users()
+    // public function users()
+    // {
+    //     return $this->belongsTo('App\User');
+    // }
+
+    // public function editor()
+    // {
+    //     return $this->belongsTo('App\Editor');
+    // }
+
+    public function consumers()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Consumer', 'users_id');
     }
 
     public function editor()
     {
-        return $this->belongsTo('App\Editor');
+        return $this->belongsTo('App\Consumer', 'editors_id');
     }
 }

@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/writer';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -43,41 +43,65 @@ class LoginController extends Controller
         $this->middleware('guest:editor')->except('logout');
     }
 
-    public function showAdminLoginForm()
-    {
-        return view('auth.login', ['url' => 'admin']);
-    }
-
-    public function adminLogin(Request $request)
-    {
+    public function login(Request $request)
+    {   
+        $input = $request->all();
+   
         $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:8'
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-
-            return redirect()->intended('/admin');
+   
+        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            if (auth()->user()->user_types_id == 1) {
+                return redirect('/admin');
+            } else if (auth()->user()->user_types_id == 2) {
+                return redirect('/editor');
+            } else {
+                return redirect('/writer');
+            }
+        }else{
+            return redirect('login')->with('error','Email-Address And Password Are Wrong.');
         }
-        return back()->withInput($request->only('email', 'remember'));
+          
     }
 
-    public function showEditorLoginForm()
-    {
-        return view('auth.login', ['url' => 'editor']);
-    }
+    // public function showAdminLoginForm()
+    // {
+    //     return view('auth.login', ['url' => 'admin']);
+    // }
 
-    public function EditorLogin(Request $request)
-    {
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:8'
-        ]);
+    // public function adminLogin(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'email'   => 'required|email',
+    //         'password' => 'required|min:8'
+    //     ]);
 
-        if (Auth::guard('editor')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+    //     if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
 
-            return redirect()->intended('/editor');
-        }
-        return back()->withInput($request->only('email', 'remember'));
-    }
+    //         return redirect()->intended('/admin');
+    //     }
+    //     return back()->withInput($request->only('email', 'remember'));
+    // }
+
+    // public function showEditorLoginForm()
+    // {
+    //     return view('auth.login', ['url' => 'editor']);
+    // }
+
+    // public function EditorLogin(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'email'   => 'required|email',
+    //         'password' => 'required|min:8'
+    //     ]);
+
+    //     if (Auth::guard('editor')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+
+    //         return redirect()->intended('/editor');
+    //     }
+    //     return back()->withInput($request->only('email', 'remember'));
+    // }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Jun 2020 pada 14.32
+-- Waktu pembuatan: 02 Jul 2020 pada 09.27
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.2
 
@@ -40,13 +40,6 @@ CREATE TABLE `admins` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `admins`
---
-
-INSERT INTO `admins` (`id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Umam', 'public/upload/posts/1593259852Foto_Qomarul Umam.jpg', 'umam@gmail.com', NULL, '$2y$10$ood7Ho3bxsAYE4ts5aGkIOv5jLndcNcW83RFOJUfu7aVVvyfpYaPO', NULL, '2020-06-27 05:09:40', '2020-06-27 05:10:52');
-
 -- --------------------------------------------------------
 
 --
@@ -66,11 +59,40 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `category_name`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 'Sport', 'sport', '2020-06-26 03:22:58', '2020-06-26 03:22:58'),
-(2, 'Entertaiment', 'entertaiment', '2020-06-25 21:01:12', '2020-06-25 21:01:12'),
-(4, 'News', 'news', '2020-06-25 23:26:23', '2020-06-25 23:26:23'),
-(5, 'News Flash', 'news-flash', '2020-06-25 23:26:29', '2020-06-25 23:26:29'),
-(6, 'Hot', 'hot', '2020-06-25 23:26:35', '2020-06-25 23:26:35');
+(1, 'News', 'news', '2020-07-01 21:43:02', '2020-07-01 21:43:02'),
+(2, 'Entertaiment', 'entertaiment', '2020-07-01 21:43:07', '2020-07-01 21:43:07'),
+(3, 'Breaking News', 'breaking-news', '2020-07-01 21:43:16', '2020-07-01 21:43:16'),
+(4, 'Hot', 'hot', '2020-07-01 21:43:30', '2020-07-01 21:43:30'),
+(5, 'Sport', 'sport', '2020-07-01 21:43:53', '2020-07-01 21:43:53'),
+(6, 'Today', 'today', '2020-07-01 21:43:58', '2020-07-01 21:43:58');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `consumers`
+--
+
+CREATE TABLE `consumers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_types_id` bigint(20) UNSIGNED NOT NULL DEFAULT 3,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'public/assets/img/avatar/avatar-1.png',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `consumers`
+--
+
+INSERT INTO `consumers` (`id`, `user_types_id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Admin Satu', 'public/upload/posts/1593587466Foto_Qomarul Umam.jpg', 'admin@gmail.com', NULL, '$2y$10$jwNhk5W38wY/Z7QMvVrBmOi/vC7Jfc1uV7D7wjooSxwat.fDDCuWG', NULL, '2020-06-30 01:09:26', '2020-07-01 21:20:49'),
+(2, 2, 'Editor Saja', 'public/assets/img/avatar/avatar-1.png', 'editor@gmail.com', NULL, '$2y$10$OV5xUjJauCTBuLfxRGOS4OoGSIeH9weqMiOwxO6kc3uHwxA.fCvCS', NULL, '2020-06-30 01:49:17', '2020-07-01 00:28:13'),
+(3, 3, 'Writer', 'public/assets/img/avatar/avatar-1.png', 'writer@gmail.com', NULL, '$2y$10$XyGQwjmPXKsGTl10keqr.eirWcFD.pYCQd8rj8IHgXM/mEylIohsi', NULL, '2020-06-30 02:05:40', '2020-06-30 02:05:40');
 
 -- --------------------------------------------------------
 
@@ -89,13 +111,6 @@ CREATE TABLE `editors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `editors`
---
-
-INSERT INTO `editors` (`id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Editor Saja', 'public/assets/img/avatar/avatar-1.png', 'editorsaja@tes.com', NULL, '$2y$10$Ahds4e8rmJSQeFqfiEDKGef5Y44EoAq.D.wWHMFYZCcuDYqA3kkTi', NULL, '2020-06-27 05:10:30', '2020-06-27 05:10:30');
 
 -- --------------------------------------------------------
 
@@ -129,13 +144,15 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2020_06_26_022524_create_categories_table', 1),
-(7, '2020_06_26_064518_create_admins_table', 2),
-(8, '2020_06_26_064532_create_editors_table', 2),
-(9, '2020_06_27_120142_create_posts_table', 3);
+(21, '2014_10_12_000000_create_users_table', 1),
+(22, '2014_10_12_100000_create_password_resets_table', 1),
+(23, '2019_08_19_000000_create_failed_jobs_table', 1),
+(24, '2020_06_26_022524_create_categories_table', 1),
+(25, '2020_06_26_064518_create_admins_table', 1),
+(26, '2020_06_26_064532_create_editors_table', 1),
+(27, '2020_06_27_120142_create_posts_table', 1),
+(28, '2020_06_30_044127_create_user_types_table', 1),
+(29, '2020_06_30_054617_create_consumers_table', 1);
 
 -- --------------------------------------------------------
 
@@ -148,6 +165,13 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('admin@gmail.com', '$2y$10$XVa0.ACvA9tWowOAm8D/uORhHOuTHM0U/5YFqggWA6dlP.l8BsN5q', '2020-07-02 00:25:38');
 
 -- --------------------------------------------------------
 
@@ -177,9 +201,8 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `category_id`, `users_id`, `editors_id`, `title`, `slug`, `image`, `description`, `body`, `type`, `status`, `reason`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 1, 'Ini adalah post pertama', 'ini-adalah-post-pertama', 'public/upload/posts/1593266950gambar-pemandangan-cantik-1-e1565192597200.jpg', 'post pertama', '<p>coba</p><p>body</p><p>text pertama</p>', 'article', 'publish', 'oke', '2020-06-27 07:09:10', '2020-06-28 04:57:03'),
-(3, 4, 1, 1, 'Draft Pertama', 'draft-pertama', 'public/upload/posts/1593316833Website-Main-Image-1140x684.png', 'ini adalah test draft pertama', '<p>dsafd cdjdndsajb</p><p> djsabdk jds das</p>', 'article', 'reject', 'coba lagi', '2020-06-27 21:00:33', '2020-06-28 05:15:34'),
-(4, 1, 1, 1, 'Ini adalah uji coba', 'ini-adalah-uji-coba', 'public/upload/posts/1593328273gambar-pemandangan-cantik-1-e1565192597200.jpg', 'sdsdsd', '<p>sdaddasf</p><p>adasdas</p><p>dsadsa</p><p><br></p>', 'article', 'publish', 'oke', '2020-06-28 00:11:13', '2020-06-28 05:21:26');
+(2, 4, 3, 2, 'Ini adalah post pertama kali', 'ini-adalah-post-pertama-kali', 'public/upload/posts/1593665873gambar-pemandangan-cantik-1-e1565192597200.jpg', 'post pertama', '<p>ini</p><p>adalah</p><p>post pertama</p>', 'article', 'publish', 'oke', '2020-07-01 21:57:53', '2020-07-01 22:09:25'),
+(3, 1, 3, 2, 'Ini adalah uji coba draft', 'ini-adalah-uji-coba-draft', 'public/upload/posts/1593666402Website-Main-Image-1140x684.png', 'draft', '<p>sdasdas</p><p>sdasd</p><p>sada</p>', 'article', 'reject', 'ulangi', '2020-07-01 22:06:42', '2020-07-01 22:17:36');
 
 -- --------------------------------------------------------
 
@@ -204,7 +227,31 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'writer', 'public/assets/img/avatar/avatar-1.png', 'writer@gmail.com', NULL, '$2y$10$cCsvThx109iyvzzhkb6vqefGZb7UXIa.ZFoa/fsDT1XsUAYTFBuAa', NULL, '2020-06-27 01:32:49', '2020-06-27 01:32:49');
+(1, 'Admin', 'public/assets/img/avatar/avatar-1.png', 'admin@admin.com', NULL, '$2y$10$ismQI71PmFWTnNYCcLKPEONTTApX5ZJlSzDtTMQSn5Kmq358AynVC', NULL, '2020-06-30 01:02:18', '2020-06-30 01:02:18');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user_types`
+--
+
+CREATE TABLE `user_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `types` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `user_types`
+--
+
+INSERT INTO `user_types` (`id`, `types`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '2020-06-30 07:54:45', '2020-06-30 07:54:54'),
+(2, 'editor', '2020-06-30 07:54:58', '2020-06-30 07:55:04'),
+(3, 'writer', '2020-06-30 07:55:27', '2020-06-30 07:55:34'),
+(4, 'user', '2020-06-30 04:44:32', '2020-06-30 05:02:56'),
+(6, 'tes 2', '2020-06-30 05:04:30', '2020-06-30 05:04:30');
 
 --
 -- Indexes for dumped tables
@@ -222,6 +269,14 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `consumers`
+--
+ALTER TABLE `consumers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `consumers_email_unique` (`email`),
+  ADD KEY `consumers_user_types_id_foreign` (`user_types_id`);
 
 --
 -- Indeks untuk tabel `editors`
@@ -254,8 +309,8 @@ ALTER TABLE `password_resets`
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `posts_category_id_foreign` (`category_id`),
-  ADD KEY `posts_users_id_foreign` (`users_id`),
-  ADD KEY `posts_editors_id_foreign` (`editors_id`);
+  ADD KEY `posts_editors_id_foreign` (`editors_id`),
+  ADD KEY `posts_users_id_foreign` (`users_id`);
 
 --
 -- Indeks untuk tabel `users`
@@ -265,6 +320,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indeks untuk tabel `user_types`
+--
+ALTER TABLE `user_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -272,19 +333,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `consumers`
+--
+ALTER TABLE `consumers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `editors`
 --
 ALTER TABLE `editors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -296,31 +363,43 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `user_types`
+--
+ALTER TABLE `user_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
+-- Ketidakleluasaan untuk tabel `consumers`
+--
+ALTER TABLE `consumers`
+  ADD CONSTRAINT `consumers_user_types_id_foreign` FOREIGN KEY (`user_types_id`) REFERENCES `user_types` (`id`);
+
+--
 -- Ketidakleluasaan untuk tabel `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `posts_editors_id_foreign` FOREIGN KEY (`editors_id`) REFERENCES `editors` (`id`),
-  ADD CONSTRAINT `posts_users_id_foreign` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `posts_editors_id_foreign` FOREIGN KEY (`editors_id`) REFERENCES `consumers` (`id`),
+  ADD CONSTRAINT `posts_users_id_foreign` FOREIGN KEY (`users_id`) REFERENCES `consumers` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

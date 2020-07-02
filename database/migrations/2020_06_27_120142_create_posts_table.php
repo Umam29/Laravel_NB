@@ -29,8 +29,8 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('users_id')->references('id')->on('users');
-            $table->foreign('editors_id')->references('id')->on('editors');
+            $table->foreign('users_id')->references('id')->on('consumers');
+            $table->foreign('editors_id')->references('id')->on('consumers');
         });
     }
 

@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
-use App\User;
+use App\Consumer;
 use App\Post;
 
 class WriterController extends Controller
 {
     public function writerProfile()
     {
-        $writer = User::findorfail(Auth::user()->id);
+        $writer = Consumer::findorfail(Auth::user()->id);
         $count_post = Post::where('users_id',Auth::user()->id)->count();
         
         return view('writer.profile.index', compact('writer', 'count_post'));
@@ -20,7 +20,7 @@ class WriterController extends Controller
 
     public function changePorfile(Request $request)
     {
-        $writer = User::findorfail(Auth::user()->id);        
+        $writer = Consumer::findorfail(Auth::user()->id);        
 
         if($request->has('avatar')) {
             $ava = $request->avatar;

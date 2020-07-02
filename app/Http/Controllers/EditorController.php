@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
-use App\Editor;
+use App\Consumer;
 use App\Post;
 
 class EditorController extends Controller
 {
     public function editorProfile()
     {
-        $editor = Editor::findorfail(Auth::user()->id);
+        $editor = Consumer::findorfail(Auth::user()->id);
         $count_post = Post::where('editors_id',Auth::user()->id)->count();
         
         return view('editor.profile.index', compact('editor', 'count_post'));
@@ -20,7 +20,7 @@ class EditorController extends Controller
 
     public function changePorfile(Request $request)
     {
-        $editor = Editor::findorfail(Auth::user()->id);        
+        $editor = Consumer::findorfail(Auth::user()->id);        
 
         if($request->has('avatar')) {
             $ava = $request->avatar;

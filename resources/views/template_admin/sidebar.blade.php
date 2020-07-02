@@ -17,5 +17,6 @@
                 <li class="{{ Route::is('admin.writer') ? 'active' : null }}"><a class="nav-link" href="{{ route('admin.writer') }}">Penulis</a></li>
               </ul>
             </li>
+            <li class="{{ Route::is('user-types.index') ? 'active' : null }}"><a class="nav-link" href="{{ route('user-types.index') }}"><i class="fas fa-fire"></i> <span>User Types</span></a></li>
          </aside>
     </div>

@@ -17,11 +17,12 @@
                     </div>
                     {!! $res->body !!}
                     <div class="article-user">
-                      <img alt="image" src="{{ asset($res->users->avatar) }}">
+                      <img alt="image" src="{{ asset($res->consumers->avatar) }}">
                       <div class="article-user-details">
                         <div class="user-detail-name">
-                          <a href="{{ route('blog.content.user', $res->users_id) }}">{{ $res->users->name }}</a>
+                          <a href="{{ route('blog.content.user', $res->users_id) }}">{{ $res->consumers->name }}</a>
                         </div>
+                        <div class="text-job">{{ $res->editor->name }}</div>
                       </div>
                     </div>
                   </div>

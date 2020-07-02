@@ -28,7 +28,7 @@
                             {{ $res->category->category_name }}
                           </td>
                           <td>
-                              {{ $res->users->name }}
+                              {{ $res->consumers->name }}
                           </td>                          
                           <td>
                             <span class="badge badge-success">Publish</span>

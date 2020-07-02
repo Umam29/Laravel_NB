@@ -5,22 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
-use App\Admin;
-use App\Editor;
-use App\User;
+use App\Consumer;
 
 class AdminController extends Controller
 {
     public function adminProfile()
     {
-        $admin = Admin::findorfail(Auth::user()->id);
+        $admin = Consumer::findorfail(Auth::user()->id);
         
         return view('admin.profile.index', compact('admin'));
     }
 
     public function changePorfile(Request $request)
     {
-        $admin = Admin::findorfail(Auth::user()->id);        
+        $admin = Consumer::findorfail(Auth::user()->id);        
 
         if($request->has('avatar')) {
             $ava = $request->avatar;
@@ -48,7 +46,7 @@ class AdminController extends Controller
 
     public function editorIndex()
     {
-        $editor = Editor::paginate(5);
+        $editor = Consumer::where('user_types_id',2)->paginate(5);
 
         return view('admin.editor.index', compact('editor'));
     }
@@ -62,7 +60,8 @@ class AdminController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'password' => 'min:8'
         ]);
 
         if($request->input('password')) {
@@ -71,10 +70,11 @@ class AdminController extends Controller
             $password = bcrypt('00000000');
         }
 
-        $editor = Editor::create([
+        $editor = Consumer::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $password
+            'password' => $password,
+            'user_types_id' => 2
         ]);
 
         return redirect()->route('admin.editor')->with('success', 'Editor data successfully added');
@@ -82,14 +82,14 @@ class AdminController extends Controller
 
     public function editorEdit($id)
     {
-        $editor = Editor::findorfail($id);
+        $editor = Consumer::findorfail($id);
 
         return view('admin.editor.edit', compact('editor'));
     }
 
     public function editorUpdate(Request $request, $id)
     {
-        $editor = Editor::findorfail($id);
+        $editor = Consumer::findorfail($id);
         
         $this->validate($request, [
             'name' => 'required',
@@ -116,7 +116,7 @@ class AdminController extends Controller
 
     public function editorDestroy($id)
     {
-        $editor = Editor::findorfail($id);
+        $editor = Consumer::findorfail($id);
         $editor->delete();
 
         return redirect()->route('admin.editor')->with('success', 'Editor data successfully deleted');
@@ -124,7 +124,7 @@ class AdminController extends Controller
 
     public function writerIndex()
     {
-        $writer = User::paginate(5);
+        $writer = Consumer::where('user_types_id', 3)->paginate(5);
 
         return view('admin.writer.index', compact('writer'));
     }
@@ -147,10 +147,11 @@ class AdminController extends Controller
             $password = bcrypt('00000000');
         }
 
-        $writer = User::create([
+        $writer = Consumer::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $password
+            'password' => $password,
+            'user_types_id' => 3
         ]);
 
         return redirect()->route('admin.writer')->with('success', 'Writer data successfully added');
@@ -158,14 +159,14 @@ class AdminController extends Controller
 
     public function writerEdit($id)
     {
-        $writer = User::findorfail($id);
+        $writer = Consumer::findorfail($id);
 
         return view('admin.writer.edit', compact('writer'));
     }
 
     public function writerUpdate(Request $request, $id)
     {
-        $writer = User::findorfail($id);
+        $writer = Consumer::findorfail($id);
         
         $this->validate($request, [
             'name' => 'required',
@@ -192,7 +193,7 @@ class AdminController extends Controller
 
     public function writerDestroy($id)
     {
-        $writer = User::findorfail($id);
+        $writer = Consumer::findorfail($id);
         $writer->delete();
 
         return redirect()->route('admin.writer')->with('success', 'Writer data successfully deleted');
